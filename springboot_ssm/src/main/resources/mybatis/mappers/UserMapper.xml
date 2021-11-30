@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace是mybaits映射文件的唯一标识,与接口对应-->
+<mapper namespace="com.jt.mapper.UserMapper">
+    <select id="findAll" resultType="User">
+        select * from demo_user
+    </select>
+
+    <select id="findUserById" resultType="User">
+        select * from demo_user where id = #{id}
+    </select>
+
+    <select id="findUserByLike" resultType="User">
+        select * from demo_user where name like "%"#{name}"%"
+    </select>
+
+    <select id="findUserByIds" resultType="User">
+        select * from demo_user where id in (
+            <foreach collection="array" separator="," item="id">
+                #{id}
+            </foreach>
+        )
+    </select>
+
+    <insert id="saveUser">
+        insert into demo_user(id,name,age,sex) values(null,#{name},#{age},#{sex})
+    </insert>
+
+    <select id="findUserByName" resultType="User">
+        select id,name,age,sex from demo_user where name = #{name}
+    </select>
+</mapper>

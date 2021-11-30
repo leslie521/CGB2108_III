@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>分支结构测试</title>
+	</head>
+	<body>
+		<div id="app">
+			<h1>分支结构测试</h1>
+			请输入分数: <input type="text" v-model="score" />
+			<!-- 
+				判断原则: 如果判断为true，则展现标签
+			 -->
+			<p v-if="score >= 90">优秀</p>
+			<p v-else-if="score >= 80">良好</p>
+			<p v-else-if="score >= 70">中等</p>
+			<p v-else>再接再厉</p>
+		</div>
+		
+		<script src="../js/vue.js"></script>
+		<script>
+			const app = new Vue({
+				el:"#app",
+				data:{
+					score:''
+				},
+				methods:{
+					
+				}
+			})
+		</script>
+	</body>
+</html>

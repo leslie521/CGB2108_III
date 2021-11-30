@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace是mybaits映射文件的唯一标识,与接口对应-->
+<mapper namespace="com.jt.mapper.DogMapper">
+
+    <select id="findAll" resultMap="dogRM">
+        select * from dog
+    </select>
+<!--id: rm的唯一标识  type:封装之后的POJO对象-->
+    <resultMap id="dogRM" type="com.jt.pojo.Dog">
+        <id column="dog_id" property="dogId"/>
+        <result column="dog_name" property="dogName"/>
+    </resultMap>
+</mapper>

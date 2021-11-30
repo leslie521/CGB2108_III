@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="springboot_mp" />
+        <module name="springboot_demo1" />
+        <module name="jt_overwrite" />
+        <module name="springboot_test1" />
+        <module name="spring" />
+        <module name="jt_better" />
+        <module name="jt" />
+        <module name="springdemo1" />
+        <module name="springboot_demo3" />
+        <module name="springboot_demo2" />
+        <module name="springboot_ssm" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="demo" target="1.8" />
+      <module name="jt" target="1.8" />
+      <module name="jt (1)" target="1.8" />
+      <module name="jt_better" target="1.8" />
+      <module name="jt_overwrite" target="1.8" />
+      <module name="spring" target="1.5" />
+      <module name="springboot_demo1" target="1.8" />
+      <module name="springboot_demo2" target="1.8" />
+      <module name="springboot_demo3" target="1.8" />
+      <module name="springboot_mp" target="1.8" />
+      <module name="springboot_ssm" target="1.8" />
+      <module name="springboot_test" target="1.8" />
+      <module name="springboot_test1" target="1.8" />
+      <module name="springdemo1" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

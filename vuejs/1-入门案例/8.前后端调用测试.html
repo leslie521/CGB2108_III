@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>前后端调用测试</title>
+	</head>
+	<body>
+		
+		<div id="app">
+			<h1>前后端调用测试</h1>
+			
+		</div>
+		
+		<script src="../js/axios.js"></script>
+		<script>
+		
+			axios.defaults.baseURL = "http://localhost:8090"
+			// let url = "http://localhost:8090/axios/saveUser"
+			let user = {name:"tomcat",age:400,sex:"男"}
+			axios.post("/axios/saveUser",user).then(
+				function(promise){
+					console.log(promise)
+					console.log(promise.data)
+				})
+			
+			/**
+			*  完成用户入库操作
+			*  用法: axios.post(url地址,对象名称)
+			 * 	      axios.put(url地址, 对象名称)
+			* 
+			* 		  axios.get(url地址,{params: 对象名称})
+			* 		  axios.delete(url地址,{params: 对象名称})
+			*/
+			
+			/**
+			 * ajax嵌套 
+			 */
+			/* axios.post("/axios/saveUser2",user1)
+			 .then(function(promise){
+			 let result = promise.data
+			//根据返回值结果,当做参数再次发起ajax请求
+			axios.post("/axios/saveUser3",result)
+				 .then(function(promise){
+				 //..............
+				console.log(promise.data)
+			})
+		 }) */
+							 
+							 
+			/**
+		 * 1.定义一个方法
+			 * 关键字: 
+	 * 		1. async 标识函数
+	 *      2. await
+	*      2. await 标识ajax请求
+			*/
+			async function saveUser(){
+				let user1 = {name:"cat",age:40,sex:"女"}
+	//let {conf: confv,data: datav,status: statusv} = await axios.post("/axios/saveUser",user2)
+				let {data: result,status:statusv} = await axios.post("/axios/saveUser",user1)
+				console.log(result)
+				console.log(statusv)
+			}
+			saveUser()
+			
+		</script>
+	</body>
+</html>

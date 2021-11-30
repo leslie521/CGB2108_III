@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace是mybaits映射文件的唯一标识,与接口对应-->
+<mapper namespace="com.jt.mapper.EmpMapper">
+
+    <cache/>
+
+    <select id="findAll" resultMap="empRM">
+        select e.emp_id,e.emp_name,d.dept_id,d.dept_name
+        from emp e,dept d
+        where e.dept_id=d.dept_id
+    </select>
+    <resultMap id="empRM" type="Emp">
+        <id property="empId" column="emp_id"></id>
+        <result property="empName" column="emp_name"></result>
+        <association property="dept" javaType="Dept">
+            <id property="deptId" column="dept_id"></id>
+            <result property="deptName" column="dept_name"></result>
+        </association>
+    </resultMap>
+
+    <select id="selectChildren" resultMap="cRM">
+        select * from emp
+    </select>
+    <resultMap id="cRM" type="Emp">
+        <id column="emp_id" property="empId"/>
+        <result column="emp_name" property="empName"/>
+        <association property="dept" javaType="Dept" select="findDept" column="dept_id"></association>
+    </resultMap>
+    <select id="findDept" resultMap="deptRM">
+        select * from dept where dept_id = #{dept_id}
+    </select>
+    <resultMap id="deptRM" type="Dept">
+        <id column="dept_id" property="deptId"/>
+        <result column="dept_name" property="deptName"/>
+    </resultMap>
+
+    <!--驼峰映射-->
+    <!--对象与表 一对一-->
+    <select id="findAutoMap" resultType="Emp">
+        select * from emp
+    </select>
+
+    <!--对象与表 一对多  多表查询-->
+    <select id="selectAutoMap" resultMap="empRM1">
+        select e.emp_id,e.emp_name,d.dept_id,d.dept_name
+        from emp e,dept d
+        where e.dept_id=d.dept_id
+    </select>
+    <resultMap id="empRM1" type="Emp" autoMapping="true">
+        <id column="emp_id" property="empId"/>
+        <!-- 其他属性省略不写-->
+        <association property="dept" javaType="Dept" autoMapping="true">
+            <id column="dept_id" property="deptId"/>
+            <!-- 其他属性省略不写-->
+        </association>
+    </resultMap>
+
+    <select id="getAll" resultType="Emp">
+        select * from emp
+    </select>
+</mapper>

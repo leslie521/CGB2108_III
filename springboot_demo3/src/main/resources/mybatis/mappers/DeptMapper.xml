@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace是mybaits映射文件的唯一标识,与接口对应-->
+<mapper namespace="com.jt.mapper.DeptMapper">
+    <select id="findAll" resultMap="deptRM">
+        select d.dept_id,d.dept_name,e.emp_id,e.emp_name
+        from dept d ,emp e
+        where e.dept_id=d.dept_id
+    </select>
+    <resultMap id="deptRM" type="Dept">
+        <id property="deptId" column="dept_id"/>
+        <result property="deptName" column="dept_name"/>
+        <collection property="emps" ofType="Emp">
+            <id property="empId" column="emp_id"/>
+            <result property="empName" column="emp_name"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectChildren" resultMap="cRM">
+        select * from dept
+    </select>
+    <resultMap id="cRM" type="Dept">
+        <id column="dept_id" property="deptId"/>
+        <result column="dept_name" property="deptName"/>
+        <collection property="emps" ofType="Emp" select="findEmp" column="dept_id"></collection>
+    </resultMap>
+    <select id="findEmp" resultMap="empRM">
+        select * from emp where dept_id = #{dept_id}
+    </select>
+    <resultMap id="empRM" type="Emp">
+        <id column="emp_id" property="empId"/>
+        <result column="emp_name" property="empName"/>
+    </resultMap>
+</mapper>

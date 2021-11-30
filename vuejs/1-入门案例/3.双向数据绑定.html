@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>双向数据绑定</title>
+	</head>
+	<body>
+		<div id="app">
+			<h1>测试双向数据绑定</h1>
+			用户名<input type="text" v-model="msg"/>{{msg}}
+		</div>
+		
+		<script src="../js/vue.js"></script>
+		<script>
+			const app = new Vue({
+				el:"#app",
+				data:{
+					msg:"admin"
+				},
+				methods:{
+					
+				}
+			})
+		</script>
+	</body>
+</html>

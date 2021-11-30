@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>远程调用</title>
+	</head>
+	<body>
+		
+		<div id="app">
+			<h1>前后端调用测试</h1>
+			
+		</div>
+		
+		<!-- <script src="../js/vue.js"></script> -->
+		<script src="../js/axios.js"></script>
+		<script>
+			//1.动态获取用户列表信息 axios.get(url地址,提交的参数)
+			let url = "http://localhost:8090/findAll"
+			axios.get(url)
+				 .then(function(promise){
+					 console.log(promise.data)
+				 })
+			
+			let id = 526
+			let url1 = "http://localhost:8090/findUserById?id="+id
+			axios.get(url1).then(
+				function(promise){
+				console.log(promise.data)
+			})
+			
+			// let age = 18
+			// let sex = "女"
+			// let url2 = "http://localhost:8090/findUserByAS?age="+age+"&sex="+sex
+			let user2 = {age:18,sex:"女"}
+			let url2 = "http://localhost:8090/findUserByAS"
+			axios.get(url2,{params: user2}).then(
+				function(promise){
+					console.log(promise.data)
+				})
+				
+			//4.实现数据修改操作
+			//4.1 请求路径 必须使用restFul结构
+			//4.2 前端知识点: 模板字符串 
+			//        语法: `` 反引号
+			// 		  作用: 1. 保留代码片段的格式
+			//		  		2. 可以动态取值: ${key}
+			let user3 = {id:1,name:"黑熊精",age:4000,sex:"男"}
+			let url3 = `http://localhost:8090/updateById/${user3.id}/${user3.name}/${user3.age}/${user3.sex}`
+			axios.put(url3).then(
+				function(promise){
+					console.log(promise.data)
+				})
+		</script>
+		
+	</body>
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jt.mapper.ItemCatMapper">
+
+    <!--子查询方式-->
+
+<!--  <select id="findItemCatList" resultMap="itemCatRM">-->
+<!--      select * from item_cat where parent_id = 0 and level = 1-->
+<!--  </select>-->
+
+<!--    <resultMap id="itemCatRM" type="ItemCat" autoMapping="true">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <collection property="children" ofType="ItemCat" select="findChildren" column="id"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="findChildren" resultMap="itemCatRM1">-->
+<!--        select * from item_cat where parent_id = #{id} and level = 2-->
+<!--    </select>-->
+
+<!--    <resultMap id="itemCatRM1" type="ItemCat" autoMapping="true">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <collection property="children" ofType="ItemCat" select="findChildren1" column="id"/>-->
+<!--    </resultMap>-->
+
+<!--    <select id="findChildren1" resultMap="itemCatRM2">-->
+<!--        select * from item_cat where parent_id = #{id} and level = 3-->
+<!--    </select>-->
+
+<!--    <resultMap id="itemCatRM2" type="ItemCat" autoMapping="true">-->
+<!--        <id column="id" property="id"/>-->
+<!--        <collection property="children" ofType="ItemCat"/>-->
+<!--    </resultMap>-->
+
+<!--    <update id="updateItemStatus">-->
+<!--        update item_cat set status = #{status} where id = #{id}-->
+<!--    </update>-->
+
+<!--    <insert id="saveItemCat">-->
+<!--        insert into item_cat(id,parent_id,name,status,level,created,updated)-->
+<!--            value(null,#{parentId},#{name},#{status},#{level},#{created},#{updated})-->
+<!--    </insert>-->
+
+<!--    <update id="updateItemCat">-->
+<!--        update item_cat set name = #{name},updated = #{updated} where id = #{id}-->
+<!--    </update>-->
+
+<!--    <delete id="deleteItemCat">-->
+<!--        delete from item_cat where id = #{id}-->
+<!--    </delete>-->
+
+</mapper>

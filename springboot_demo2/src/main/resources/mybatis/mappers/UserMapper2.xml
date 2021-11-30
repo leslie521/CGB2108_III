@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace是mybaits映射文件的唯一标识,与接口对应-->
+<mapper namespace="com.jt.mapper.UserMapper2">
+
+    <!--2.简化sql-->
+    <sql id="user_column">
+        id,name,age,sex
+    </sql>
+
+    <select id="findUser" resultType="User">
+        select <include refid="user_column"/> from demo_user
+    </select>
+
+    <!--Mybatis集合操作
+            知识点：如果遇到的集合参数传递，需要将集合遍历
+            标签：foreach 循环遍历集合
+            标签属性说明：
+                    1.collection 表示遍历的集合类型
+                        1.1 数组      关键字 array
+                        1.2 List集合  关键字 list
+                        1.3 Map集合   关键字 Map中的key
+                    2.  open  开始循环标签
+                        close 循环结束标签 包裹循环体
+                    3.separator 分隔符
+                    4.item  当前循环遍历的数据的变量
+    -->
+    <select id="findIn" resultType="User">
+        select <include refid="user_column"/> from demo_user where id in
+            <foreach collection="array" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+    </select>
+
+    <select id="findInList" resultType="User">
+        select <include refid="user_column"/> from demo_user where id in
+        <foreach collection="list" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </select>
+
+    <select id="findInMap" resultType="User">
+        select <include refid="user_column"/> from demo_user where id in (
+        <foreach collection="ids" separator="," item="id">
+        #{id}
+        </foreach>
+        )
+        and sex = #{sex}
+    </select>
+
+    <!--动态sql语句
+        核心思想：自动判断是否为null，如果为null，该字段不参与sql
+        动态Sql规则
+            1. <if test="写判断条件"></if>
+                true: 会拼接字段条件
+                false: 不会拼接字段条件
+            2. 多余的关键字
+                由于动态sql拼接必然会导致多余的and  或者  or
+            3.where标签说明 可以去除 where后边多余的and  或者  or-->
+    <select id="findSqlWhere" resultType="User">
+        select * from demo_user
+            <where>
+                <if test="id != null"> id = #{id}</if>
+                <if test="name != null"> and name = #{name}</if>
+                <if test="age != null"> and age = #{age}</if>
+                <if test="sex != null"> and sex = #{sex}</if>
+            </where>
+    </select>
+
+    <!--set标签用法：取出set条件中多余的,号-->
+    <update id="updateSqlSet">
+        update demo_user
+            <set>
+                <if test="name != null">name=#{name},</if>
+                <if test="age != null">age = #{age},</if>
+                <if test="sex != null">sex = #{sex}</if>
+            </set>
+            where id = #{id}
+    </update>
+
+    <!--如果只需要一个条件有效，则使用分支结构用法-->
+    <select id="findChoose" resultType="User">
+        select * from demo_user
+        <where>
+            <choose>
+                <when test="name != null">
+                    name = #{name}
+                </when>
+                <when test="age != null">
+                    age = #{age}
+                </when>
+                <otherwise>
+                    sex = #{sex}
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+</mapper>

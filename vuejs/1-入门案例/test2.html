@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>用户列表展现案例练习2</title>
+	</head>
+	<body>
+		<div id="app">
+			<div align="center">
+				<h3 align="center">用户新增</h3><br>
+				<p>
+					用户名称: <input type="text" name="name" v-model="addUser.name"/>
+					用户年龄: <input type="text" name="age"  v-model="addUser.age"/>
+					用户性别: <input type="text" name="sex"  v-model="addUser.sex"/>
+					<button @click="addUserBtn()">新增</button>
+				</p>
+			</div>
+			<hr />
+			<div align="center">
+				<h3 align="center">用户修改操作</h3><br>
+				<p>
+					用户ID号: <input type="text" name="id"   v-model="updateUser.id" disabled/>
+					用户名称: <input type="text" name="name" v-model="updateUser.name" />
+					用户年龄: <input type="text" name="age"  v-model="updateUser.age" />
+					用户性别: <input type="text" name="sex"  v-model="updateUser.sex" />
+					<button @click="updateUserBtn()">修改</button>
+				</p>
+			</div>
+			<h1 align="center">用户列表展现案例</h1>
+				<table align="center" border="1px" width="80%">
+					<tr align="center">
+						<td>ID编号</td>
+						<td>姓名</td>
+						<td>年龄</td>
+						<td>性别</td>
+						<td>操作</td>
+					</tr>
+					<tr align="center" v-for="user in userlist">
+						<td v-text="user.id"></td>
+						<td v-text="user.name"></td>
+						<td v-text="user.age"></td>
+						<td v-text="user.sex"></td>
+						<td>
+							<button @click="updateClick(user)">修改</button>
+							<button @click="deleteUserBtn(user)">删除</button>
+						</td>
+					</tr>
+				</table>
+		</div>
+				
+		<script src="../js/axios.js"></script>
+		<script src="../js/vue.js"></script>
+		<script>
+			axios.defaults.baseURL = "http://localhost:8092"
+			const app = new Vue({
+				el:"#app",
+				data:{
+					userlist:[],
+					addUser:{
+						id:null,
+						name:'',
+						age:'',
+						sex:''
+					},
+				 updateUser:{
+						id:'',
+						name:'',
+						age:'',
+						sex:''
+					}
+				},
+				methods:{
+					async findUserList(){
+						let {data: result} = await axios.get("/axios/findUserList")
+						this.userlist = result
+					},
+					async addUserBtn(){
+						let {data: result,status: status} = await axios.post("/axios/saveUser",this.addUser)
+						if (status === 200) {
+							alert(result)
+							this.addUser = {}
+							this.findUserList()
+						} else{
+							alert("用户新增失败")
+						}
+						
+					},
+					updateClick(user){
+						this.updateUser = user
+					},
+					async updateUserBtn(){
+						let {data: result} = await axios.put("/axios/updateUser",this.updateUser)
+						alert(result)
+						this.updateUser = {}
+						this.findUserList()
+					},
+					async deleteUserBtn(user){
+						let id = user.id
+						let {data: result} = await axios.delete("/axios/deleteUser?id="+id)
+						alert(result)
+						this.findUserList()
+					}
+				},
+				mounted(){
+					this.findUserList()
+				}
+			})
+		</script>
+	</body>
+</html>

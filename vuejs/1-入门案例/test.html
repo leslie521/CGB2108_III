@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>测试</title>
+	</head>
+	<body>
+		<div id="app">
+			<h1>双向绑定测试</h1>
+			用户名: <input type="text" v-model="msg"/>{{msg}}
+			<h1>点击事件测试</h1>
+			{{num}}<br>
+			<button v-on:click="add()">点击自增</button>
+			<h1>分支结构测试</h1>
+			<input type="text" v-model="score">
+			<p v-if="score > 100">输入错误，请重新输入！</p>
+			<p v-else-if="score >= 90">优秀</p>
+			<p v-else-if="score >= 80">良好</p>
+			<p v-else-if="score >= 70">中等</p>
+			<p v-else>继续努力</p>
+			<!-- <h1>数组循环结构测试</h1>
+			<p v-for="(item,index) in array">{{index}}**********{{item}}</p>
+			<h1>集合循环结构测试</h1>
+			<p v-for="user in list">{{user.name}}**********{{user.age}}</p> -->
+			<h1>远程调用</h1>
+			
+		</div>
+		
+		<script src="../js/vue.js"></script>
+		<script src="../js/axios.js"></script>
+		<script>
+			const app = new Vue({
+				el:"#app",
+				data:{
+					msg:"admin",
+					num:1,
+					score:'',
+					array:['siemens','weinview','omron','ge','temic'],
+					list:[
+						{name:"anita",age:"18"},
+						{name:"andy",age:"20"},
+						{name:"lam",age:"30"}
+					]
+				},
+				methods:{
+					add:function (){
+						this.num++
+					}
+					
+				}
+			})
+			
+			/* 远程调用 */
+			let name = "孙尚香"
+			url = "http://localhost:8090/findUserByName?name="+name
+			
+			axios.get(url).then(
+				function(promise){
+					console.log(promise.data)
+				})
+				
+			let user = {name:"悟空",age:8000}
+			url1 = "http://localhost:8090/findUserByNA"
+			axios.get(url1,{params: user}).then(
+				function(promise){
+					console.log(promise.data)
+				})
+			
+		</script>
+	</body>
+</html>

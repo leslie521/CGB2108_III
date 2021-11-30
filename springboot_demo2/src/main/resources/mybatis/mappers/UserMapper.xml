@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace是mybaits映射文件的唯一标识,与接口对应-->
+<mapper namespace="com.jt.mapper.DeptMapper">
+    <!--
+        标签说明：
+            1.查询操作  select标签
+            2.新增操作  insert标签
+            。。。
+        select标签介绍：
+            1. id属性 必须与方法名称一致
+            2. resultType 返回值的pojo类型
+        sql:全部小写  ctrl + shift + y
+    -->
+    <select id="findAll" parameterType="Integer" resultType="com.jt.pojo.Emp">
+        select * from demo_user
+    </select>
+
+    <!--根据ID查询数据
+        取值操作：#{id} id代表参数的名称
+    -->
+    <select id="findUserById" resultType="com.jt.pojo.Emp">
+        select * from demo_user where id = #{id}
+    </select>
+
+    <insert id="saveUser">
+        insert into demo_user(id,name,age,sex) values(null,#{name},#{age},#{sex})
+    </insert>
+
+    <update id="updateUser">
+        update demo_user set name=#{name},age=#{age}
+        where id=#{id}
+    </update>
+
+    <delete id="deleteUser">
+        delete from demo_user where name = #{name}
+    </delete>
+
+    <!--特殊转义字符
+        > &gt;
+        < &lt;
+        & &amp;
+        万能转义标签   <![CDATA[ 需要转义的内容 ]]>
+    -->
+    <select id="findByAge" resultType="com.jt.pojo.Emp">
+        <!--select * from demo_user where age > #{minAge} and age &lt; #{maxAge} -->
+        <![CDATA[
+            select * from demo_user where age > #{minAge} and age < #{maxAge}
+        ]]>
+    </select>
+
+    <select id="findParam" resultType="com.jt.pojo.Emp">
+        <!--select * from demo_user where age > #{minAge} and age &lt; #{maxAge} -->
+        <![CDATA[
+            select * from demo_user where age > #{minAge} and age < #{maxAge}
+        ]]>
+    </select>
+
+    <select id="findUserByLike" resultType="com.jt.pojo.Emp">
+        <!--select * from demo_user where age > #{minAge} and age &lt; #{maxAge} -->
+        select * from demo_user where name like "%"#{name}"%"
+    </select>
+
+    <!--实现数据新增 新增成功之后自动返回影响的行数
+        数据取值时 使用#{属性名} 获取数据
+    -->
+
+    
+
+
+    <!--特殊转义字符
+        > &gt;
+        < &lt;
+        & &amp;
+        万能转义标签   <![CDATA[ 需要转义的内容 ]]>
+    -->
+
+
+    <!--<select id="selectUserListByLike" resultType="com.jt.pojo.Emp">
+        select * from demo_user where name like "%"#{name}"%"
+    </select>-->
+
+</mapper>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--核心配置文件-->
+<configuration>
+    <!--Mybatis的核心配置文件有顺序
+        "configuration" must match "(properties?,settings?,typeAliases?,
+        typeHandlers?,objectFactory?,objectWrapperFactory?,reflectorFactory?,
+        plugins?,environments?,databaseIdProvider?,mappers?)"
+    -->
+    <typeAliases>
+        <!--type: POJO对象的路径
+            alias：为当前的POJO对象起的别名-->
+<!--        <typeAlias type="com.jt.pojo.Emp" alias="User"/>-->
+        <package name="com.jt.pojo"/>
+    </typeAliases>
+
+    <!--环境配置标签
+        mybatis支持多个数据源的配置，default="默认连接数据源"
+    -->
+    <environments default="development">
+
+        <!--编辑开发环境-->
+        <environment id="development">
+            <!--mybatis 采用jdbc的方式控制数据库事务-->
+            <transactionManager type="JDBC"/>
+            <!--
+                type="POOLED" 创建一个数据源链接池，每次从池中获取链接。
+            -->
+            <dataSource type="POOLED">
+                <!--版本信息
+                    如果数据源采用5.x的版本  value:com.mysql.jdbc.Driver
+                    如果数据源采用8.x的版本  value:com.mysql.cj.jdbc.Driver
+                -->
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/jt?serverTimezone=GMT%2B8&amp;useUnicode=true&amp;characterEncoding=utf8&amp;autoReconnect=true&amp;allowMultiQueries=true"/>
+                <property name="username" value="root"/>
+                <property name="password" value="root"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--Mybatis加载Mapper映射文件-->
+    <mappers>
+        <mapper resource="mybatis/mappers/UserMapper.xml"/>
+        <mapper resource="mybatis/mappers/UserMapper2.xml"/>
+        <mapper resource="mybatis/mappers/DogMapper.xml"/>
+        <!--使用注解时， mybatis需要管理mapper的接口-->
+        <mapper class="com.jt.mapper.UserAnnoMapper"></mapper>
+    </mappers>
+
+</configuration>
